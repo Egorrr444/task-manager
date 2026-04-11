@@ -1,17 +1,5 @@
-from sqlalchemy import Boolean, Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-
-# строка подключения
-engine = create_engine("sqlite:///./test.db", connect_args={"check_same_thread": False}, echo=True)
-
-
-# создаем движок SqlAlchemy
-Base = declarative_base()
-
-
-# создаем класс сессии
-SessionLocal = sessionmaker(autoflush=False, bind=engine)
+from sqlalchemy import Boolean, Column, Integer, String
+from app.db.database import Base
 
 
 # создаем модель, объекты которой будут храниться в бд
@@ -23,4 +11,3 @@ class Task(Base):
     description = Column(String, index=True)
     completed = Column(Boolean, default=False)
 
-Base.metadata.create_all(bind=engine)
