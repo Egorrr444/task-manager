@@ -1,11 +1,13 @@
+from typing import Optional
 from pydantic import BaseModel
 
 class Task(BaseModel):
     id: int
-    name: str
+    title: str
     description: str 
     completed: bool
 
 class TaskCreate(BaseModel):
-    name: str
+    title: str
     description: str
+    completed: Optional[bool] = False

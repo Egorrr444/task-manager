@@ -11,9 +11,9 @@ def create_task(task: TaskCreate):
 
     new_task = Task(
         id=next_id,
-        name=task.name,
+        title=task.title,
         description=task.description,
-        completed=False
+        completed=task.completed
     )
 
     db.append(new_task)
