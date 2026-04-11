@@ -1,26 +1,28 @@
-from app.schemas.task import Task, TaskCreate
-
-
-db: list[Task] = []
-next_id = 1
+from app.models.task import Task
+from app.models.task import SessionLocal
+from app.schemas.task import TaskCreate 
 
 
 
 def create_task(task: TaskCreate):
-    global next_id
-
-    new_task = Task(
-        id=next_id,
+   
+    with SessionLocal() as session:
+        new_task = Task(
         title=task.title,
         description=task.description,
-        completed=task.completed
-    )
+        completed=False
+    )  
+    
 
-    db.append(new_task)
-    next_id += 1
+    session.add(new_task)
+    session.commit()
+    session.refresh(new_task)
     return new_task
 
+    
 
 
 def get_all_tasks():
-    return db
+    with SessionLocal() as session:
+        return session.query(Task).all()
+    
